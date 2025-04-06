@@ -169,4 +169,23 @@ Các giao thức lending DeFi cho phép **cho vay – vay mượn tài sản nga
 - Vay USDC bằng cách thế chấp ETH
 
 ---
+## Cài đặt
 
+Cài đặt OpenZeppelin dependencies dùng Foundry:
+```bash
+forge install OpenZeppelin/openzeppelin-contracts --no-commit
+```
+
+Generate remapping:
+```bash
+forge remappings > remappings.txt
+```
+
+---
+## ⚠️ Errors
+
+### Overriding function visibility differs
+Lỗi này xảy ra khi **visibility** của hàm trong contract con không khớp với **visibility** của hàm trong contract cha khi đang ghi đè.
+
+🛠️ Solution: 
+> Đảm bảo rằng hàm ghi đè có cùng **visibility** như hàm trong contract cha.
