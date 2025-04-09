@@ -239,3 +239,38 @@ Thực hiện 3 chức năng của tiền: đơn vị đo lường, lưu trữ g
 
 >Đây mới chỉ là bề nổi của DeFi. Khi các nền tảng lớn như Aave và Curve ra mắt stablecoin riêng, cuộc chơi sẽ càng hấp dẫn hơn.
 
+Dưới đây là phiên bản tiếng Việt chuyên nghiệp của phần mô tả bạn yêu cầu, phù hợp để đưa vào file `README.md`:
+
+---
+
+## 🪙 Decentralized Stablecoin (DSC)
+
+### Tổng quan
+
+**Decentralized Stablecoin (DSC)** là một giao thức stablecoin phi tập trung, được thế chấp bằng tài sản ngoại sinh (exogenous collateral), với mục tiêu duy trì **giá trị ổn định tương đối**, được **neo giá theo Đô la Mỹ (USD)**.
+
+### Đặc điểm chính
+
+- **Neo giá theo USD**  
+  DSC được thiết kế để duy trì tỷ lệ 1:1 với đồng USD, sử dụng cơ chế phi tập trung kết hợp với tài sản thế chấp từ crypto.
+
+- **Tài sản thế chấp ngoại sinh**  
+  Chỉ chấp nhận các token được bao bọc từ tài sản bên ngoài:
+  - **wETH** (Wrapped Ether)
+  - **wBTC** (Wrapped Bitcoin)
+
+- **Cơ chế ổn định phi tập trung**  
+  Việc mint và burn DSC được điều khiển bằng một **thuật toán tự động**, đảm bảo rằng:
+  - Người dùng chỉ có thể **mint khi có đủ tài sản thế chấp**
+  - Token có thể được **burn để giảm cung**, giúp duy trì giá ổn định
+
+- **Sử dụng Chainlink Price Feeds**  
+  Dữ liệu giá được cập nhật theo thời gian thực thông qua **Oracle của Chainlink**, cho phép chuyển đổi an toàn giữa:
+  - ETH → USD  
+  - BTC → USD
+
+### Mục tiêu
+
+Tạo ra một tài sản kỹ thuật số ổn định, phi tập trung, có thể được sử dụng rộng rãi trong các ứng dụng DeFi — minh bạch, không cần sự tin tưởng, và gắn liền với hệ sinh thái crypto.
+
+---
