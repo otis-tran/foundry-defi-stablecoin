@@ -181,6 +181,9 @@ Generate remapping:
 forge remappings > remappings.txt
 ```
 
+```bash
+forge install smartcontractkit/chainlink-brownie-contracts@0.6.1 --no-commit
+```
 ---
 ## ⚠️ Errors
 
