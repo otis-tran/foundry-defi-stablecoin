@@ -53,10 +53,9 @@ contract DecentralizedStableCoin is ERC20Burnable, Ownable {
 
     /**
      * @notice Constructor for the Decentralized Stable Coin contract.
-     * @param initialOwner The address that will be set as the owner of the contract.
      * @dev This constructor sets the initial owner and initializes the ERC20 token with a name and symbol.
      */
-    constructor(address initialOwner) ERC20("Decentralized Stable Coin", "DSC") Ownable(initialOwner) {}
+    constructor() ERC20("Decentralized Stable Coin", "DSC") Ownable() {}
 
     /**
      * @notice Burn a specified amount of DSC tokens.
