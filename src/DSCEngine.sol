@@ -1,3 +1,25 @@
+// Layout of Contract:
+// version
+// imports
+// errors
+// interfaces, libraries, contracts
+// Type declarations
+// State variables
+// Events
+// Modifiers
+// Functions
+
+// Layout of Functions:
+// constructor
+// receive function (if exists)
+// fallback function (if exists)
+// external
+// public
+// internal
+// private
+// internal & private view & pure functions
+// external & public view & pure functions
+
 // SPDX-License-Identifier: MIT
 
 pragma solidity 0.8.28;
@@ -36,6 +58,7 @@ contract DSCEngine is ReentrancyGuard {
     error DSCEngine__TokenAddressesAndPriceFeedAddressesMustBeSameLength();
     error DSCEngine__TokenNotAllowed(address token);
     error DSCEngine__TransferFailed();
+    error DSCEngine__BreaksHealthFactor(uint256 healthFactor);
 
     /////////////////////////
     //   State Variables   //
@@ -49,6 +72,9 @@ contract DSCEngine is ReentrancyGuard {
 
     uint256 private constant ADDITIONAL_FEED_PRECISION = 1e10;
     uint256 private constant PRECISION = 1e18;
+    uint256 private constant LIQUIDATION_THRESHOLD = 50;
+    uint256 private constant LIQUIDATION_PRECISION = 100;
+    uint256 private constant MIN_HEALTH_FACTOR = 1e18;
 
     ////////////////
     //   Events   //
@@ -133,7 +159,6 @@ contract DSCEngine is ReentrancyGuard {
     ///////////////////////////////////////////
     //   Private & Internal View Functions   //
     ///////////////////////////////////////////
-    function _revertIfHealthFactorIsBroken(address user) internal view {}
 
     /*
     * Returns how close to liquidation a user is
@@ -141,6 +166,8 @@ contract DSCEngine is ReentrancyGuard {
     */
     function _healthFactor(address user) private view returns (uint256) {
         (uint256 totalDscMinted, uint256 collateralValueInUsd) = _getAccountInformation(user);
+        uint256 collateralAdjustedForThreshold = (collateralValueInUsd * LIQUIDATION_THRESHOLD) / LIQUIDATION_PRECISION;
+        return (collateralAdjustedForThreshold * PRECISION) / totalDscMinted;
     }
 
     function _getAccountInformation(address user)
@@ -150,6 +177,13 @@ contract DSCEngine is ReentrancyGuard {
     {
         totalDscMinted = s_DSCMinted[user];
         collateralValueInUsd = getAccountCollateralValue(user);
+    }
+
+            function _revertIfHealthFactorIsBroken(address user) internal view {
+        uint256 userHealthFactor = _healthFactor(user);
+        if (userHealthFactor < MIN_HEALTH_FACTOR) {
+            revert DSCEngine__BreaksHealthFactor(userHealthFactor);
+        }
     }
 
     //////////////////////////////////////////
